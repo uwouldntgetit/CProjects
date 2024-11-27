@@ -1,0 +1,35 @@
+#+title: matrix_calculator project planner
+#+author: Federico Giudici
+
+* Starting screen
+** Initial message of introduction V
+*** option to initialize the matrix yourself V
+**** initializing screen V
+***** input the numbers, if inserted a character, automatically initialize the row to 0 (to add later when i'm more comfortable with user input)
+*** option to initialize the matrix randomly V
+
+* Operation screen V
+** choose operation to do V
+*** addition V
+*** subtraction V
+*** average V
+*** multiplication (to add in a later version)
+*** division (to add in a later version)
+
+* Target screen
+** choose the target of the operation V
+*** one or more rows V
+*** one or more columns
+*** specific elements V
+**** specific elements screen V
+***** input the location of the element V
+*** all the matrix
+
+* Final screen
+** display result of operation V
+** ask if the user wants to continue V
+
+* Things to implement
+** you can choose from which row and column to start selecting when you chose the option to selecte the rows and columns yourself
+** implement the option to chose only some specific rows and columns
+**

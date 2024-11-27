@@ -1,0 +1,56 @@
+Definition of object: an object is the result from an instantiation of a class, taking the blueprint and defining each attribute and behaviourof the object. It is so a dedicated and continuous block of memory allocated to store some information.
+Definition of instance: instance is a memory block which contains the reference to an object, so a pointer. Like a pointer, the name of the instance can be used to access the memroy area of the objecct. Two instances may refer to the same object, and lifespan of an object and an instance are not relate, therefore an instance could be null.
+Definition of interface(OOP): an interface is the set of the inputs and outputs of an object, so the operations that can be invoked on it, and if there are, the return values
+
+A new instance and class of GObject is created through the use of the g_object_new function. 
+- the class of GObject is created at the first call of g_object_new, and there exists only one GObject class
+- the instance is created whenever the function is called, and there can be more than one instance at the same time
+the g_object_new function allocates GObject-sized memory, initializes it, and then returns a pointer to it. The memory is a GObject instance
+the class of GObject is memory allocated by that function, and its structure is defined with GObjectClass.
+the function g_object_new creates a new GObject instance, a chunk of memory of which the structure is GObject. It also takes an argument type that represents the type of GObject, that is different from the normal ones of C, and comes from the specific type system of gobject.
+
+GObject, and its lower type system, GType, are used by GTK and most GNOME libraries to provide:
+- object-oriented C-based APIs
+- automatic transparent API bindings to other compiled or interpreted languages
+so GLib is used for cross-language interoperability, and a different way of writing C code
+It is specifically used to automatically generate "glue code" to that make possible to use C objects written with GType directly in a variety of languages, with a minimum amount of work.
+
+A type, as manipulated by the GLib type system, is much more generic than what is usually understood as an object type. 
+g_type_register_static(), g_type_register_dynamic() are C functions, defined in gtype.h and implemented in gtype.c which are used to register a new GType in the program's type system. There also exists g_type_register_fundamental(), a function used to create a new fundamental type, a top-level type which do not derive from any other type while other non-fundamental types derive from other types.
+These types are defined by:
+- class size
+- class size functions (C++ constructor)
+- class size destructions (C++ destructor)
+- instance size (C++ parameter to new)
+- instantiation policy (C++ type of new operator)
+- copy functions (C++ copy operator)
+- type charcteristics
+non-fundamental types are also defined by the the type of their parents, and fundamental types are also defined by a set of GTypeFundamentalFlags
+The major common point between all GLib types is that they can all be manipulated through a single API to copy/assign them. The GValue structure is used as an abstract container for all of these types. Within this API is defined a family of functions called value_table, of which g_value_copy is a member. This function is used to copy the content of a GValue in another GValue.
+
+There are some important conventions that the developer is expected to follow:
+- Type names (including object names) must be at least three characters long and start with “a–z”, “A–Z” or “_”.
+- Use the object_method pattern for function names: to invoke the method named save on an instance of object type file, call file_save.
+- Use prefixing to avoid namespace conflicts with other projects. If your library (or application) is named Viewer, prefix all your function names with viewer_. 
+- Create a macro named PREFIX_TYPE_OBJECT which always returns the GType for the associated object type.
+- Use G_DECLARE_FINAL_TYPE or G_DECLARE_DERIVABLE_TYPE to define various other conventional macros for your object.
+The implementation of these macros is pretty striaghtforward: a number of simple-to-use macros are provided in gtype.h.
+
+A lot of types are not instantiable by the type system and do not have a class. Most of these types are fundamental trivial types and are already registered by GLib. In the rarea case of needing to register such a type in the type system, you have to fill a GTypeInfo structure with zeroes wince these types are also most of the time fundamental. These types  may seem useless, but they are generally used in conjunction with Gvalue S, most useful when used together with object properties and signals.
+
+Types which are registered with a class and are also declared instantiatable are what most closely resembles an object. The most common type of tis type of object is GObject S, other similar types used as the base of an inheritance hierarchy have been externally developed.
+
+Every object must define two structures: its class structure and its instance structure. All class structures must contain as first member a GTypeClass structure. All instance structures must contain as first member a GTypeInstance structure. The first field of an instance of an object B is A's first field which in turn is GTypeInstance's first field whichin turn is g_class, a pointer to B's class structure
+
+instantiation of objects can be done with g_type_create_instance(), whihc will look up the type information structure associated with the type requested. Then the instance type and instantiantion policy(if n_preallocs is not zero) declared by the user are used to get a buffer to hold the object's instance structure. 
+If this is the first instance of the object, or, in simpler terms, if this is the first the first time an object of a specific class is declared, the type system must create a class structure. The first part of the class structure is initialized by copying the contents from the parent class(if there is one), and the rest is initialized to zero. The type system then invokes the GBaseInitFunc() from top-most fundamental object to bottom-most derived object. The object'class initializaiton function GClassInitFunc is invoked afterward. Finally, the object's interfaces(?) are initialized.
+Once all of this is done, it sets the object's instance class pointer to the object's class structure and invokes the object's GInstanceInitFunc from top-most fundamental type to bottom-most derived type
+Object instances are destroyed through the use of g_type_free_instance(), the instance structure is returned to the instance pool(if one exists), and if it was the last living instance of the object, the class is destroyed.
+Class destruction is the symmmetric process of initialization, interfaces are destroyed first, then are the funcitons GClassFinalizeFunc() and GBaseFinalizeFunc() are invoked consequently, freeing all the memory
+differently form C++, GType has no instance destruction mechanism, and it is the user's responsability to do it. 
+
+GType interfaces are very useful, and are used to describe a common API that several classes will adhere to. To declare an interface, you have to first register a non-instantiable classed type which derives from GTypeInterface.
+
+
+
+

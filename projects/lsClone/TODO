@@ -1,0 +1,3 @@
+- transform the file size from bytes to kb/mb/gb depending on the size
+- add the possibility to input more than one directory
+- add the possibility to swap the position of options and directories

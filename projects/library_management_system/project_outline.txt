@@ -1,0 +1,32 @@
+project to simulate a library management system
+
+functions of the program:
+- store books(in a file)
+- add and delete books
+- lend and return books
+- view record of books issued and returned
+
+functions of v2.0:
+- create a user account
+- simulate the passing of days
+- add username to the record
+
+subjects to study for this:
+- file handling
+
+
+program to simulate a library management system
+
+ functions to implement:
+ - to store books in a file V
+ -- to select a specific file as the storage V
+ -- to read a file V
+ - to delete a book 
+ - to lend and return books(similar to the one above)
+ -- to check that the book is currently present in the storage
+ --- to mark the book as lent or returned
+ - to view records of books issued and returned
+
+first thing to do is to build the program's skeleton, so i will make a simple program to
+open, read and then write in a schematic way the book name and if it's present or not
+

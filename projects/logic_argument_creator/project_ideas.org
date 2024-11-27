@@ -1,0 +1,29 @@
+#+title: Project Ideas
+
+
+* Logical arguments creator V1.0
+** inserted an argument form (P-->Q), it automatically build an argument with the help of the user
+** the user has to input the statements for P and Q, and the program builds the argument
+** The argument form to implement are: modus ponens, modus tollens, transitivity, specialization, elimination
+** Subjects to study for this project:
+*** taking a string as an input from the user
+*** manipulatin strings
+
+** Starting screen
+*** welcome message
+*** choose between string mode(the user inserts actual arguments) and theoretical arguments mode(P,Q,...)
+
+** Input screen
+*** print supported argument forms
+*** explain how to write the argument(for P-->q for example, the user has to write "if" before the argument, and has to write "then" to divide it, else it will be illegal)
+*** take in input the premises and the conclusion (in V 1.0 the supported premises are only 2)
+
+** End screen
+*** print argument form
+*** print result
+*** ask if user wants to play again
+
+* PROJ Functions to implement (KEEP IT SIMPLE!!!)
+- take in input two premises and a conclusion (in an argument form way) and put them in a char array
+- checks for spelled logical operators (if-then, not, and, or, therefore)
+-

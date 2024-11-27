@@ -1,0 +1,6 @@
+this is the first version of this ls clone, the second version could also implement command line arguments and better error handling
+
+arguments and their usage:
+
+    -l      it prints all the important informations about a file or directory
+    -a      it prints hidden files too
