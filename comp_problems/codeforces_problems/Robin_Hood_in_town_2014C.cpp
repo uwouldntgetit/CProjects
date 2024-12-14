@@ -1,5 +1,6 @@
 #include <iostream>
-
+#include <vector>
+#include <iomanip>
 using namespace std;
 
 void solution();
@@ -19,27 +20,61 @@ int main(){
 
 void solution(){
     long n, x, c;
-    double avg;
+    double avg, p;
 
     cin >> n;
-    x = c = 0;
-    long arr[n];
+    x = c = p = 0;
+    avg = 0;
+    vector<long> arr(n);
+
 
     for(long i = 0; i < n; i++){
         cin >> arr[i];
         avg += arr[i];
     }
 
-    avg /= n;
-    for(int i = 0; i < n; i++){
-        if(arr[i] < avg) c++;
+    if(n < 3){
+        cout << -1 << endl;
+        return;
     }
-    
-    if(c > ((double)n / 2))
-        cout << "Robin appears" << endl;
-    else 
-        cout << "Robin doesn't appear" << endl;
-    //cout << avg << endl;
-    //cout << "count: " << c << endl;
 
+    // descending
+    for(int i = 0; i < n; i++){
+        for(int k = 0; k < n; k++){
+            if(arr[i] > arr[k]){
+                long h = arr[i];
+                arr[i] = arr[k];
+                arr[k] = h;
+            }
+        }
+    }
+
+    avg /= n;
+    for(int i = n - 1; i >= 0; i--){
+        if(arr[i] < (avg / 2)) c++;
+        else break;
+    }
+
+    // cout << "c: " << c << endl;
+    if(c > (n / 2)){
+        // cout << "I'm getting to the source" << endl;
+        cout << 0 << endl;
+        return;
+    }
+
+    
+    // I have to make some rich people poorer than avg
+    p = arr[(n / 2) - (n % 2 == 0 ? 1 : 0)] - (avg / 2);
+    p = (p * n * 2.0);
+    x = p;
+    if((p - x) > 0) {
+        cout << "did";
+        x++;
+    }
+
+
+    cout << fixed <<  setprecision(15) << p << endl;
+    cout << x << endl;
 }
+
+// the algorithm works well, but there's some problem with input
