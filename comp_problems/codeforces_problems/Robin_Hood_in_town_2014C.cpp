@@ -65,15 +65,15 @@ void solution(){
     
     // I have to make some rich people poorer than avg
     p = arr[(n / 2) - (n % 2 == 0 ? 1 : 0)] - (avg / 2);
-    p = (p * n * 2.0);
+    p = (p * n * 2.0) + 1;
     x = p;
-    if((p - x) > 0) {
+/*    if((p - x) > 0) {
         cout << "did";
         x++;
-    }
+    }*/
 
 
-    cout << fixed <<  setprecision(15) << p << endl;
+    /*cout << fixed <<  setprecision(15) << p << endl;*/
     cout << x << endl;
 }
 
