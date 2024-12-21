@@ -1,0 +1,7 @@
+Idea:
+I want to create a terminal snake game, basic functions are:
+- snake moves every .5 seconds
+- snake becomes bigger for every apple it eats
+- every 2 seconds an apple is spawned
+- the points are ccalculated as sum(specific_num_apples * seconds_with_score). It means that the time spent with a specific number of apples is multiplied by that same number of apples. All those values are
+    then added to one another.
