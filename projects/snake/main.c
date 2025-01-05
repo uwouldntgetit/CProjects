@@ -6,6 +6,8 @@ int main(int argc, char* argv[]){
 	initscr();
 	noecho();
 	curs_set(FALSE);
+    cbreak();
+    halfdelay(DELAY);
 
     mvprintw(0, 0, "Hi");
     refresh();
@@ -13,7 +15,6 @@ int main(int argc, char* argv[]){
 
     mvprintw(0, 0, "Hey");
     refresh();
-    sleep(1);
 
 	endwin();
     return 0;
