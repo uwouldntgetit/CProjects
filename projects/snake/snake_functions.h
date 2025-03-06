@@ -1,6 +1,9 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
 #include <ncurses.h>
 #include <unistd.h>
+#include <math.h>
 
 #define DELAY 5
 #define SCREEN_SIZE 20
@@ -19,6 +22,10 @@ struct element {
 
 void show_field(struct element *list, int size, int xpos, int ypos);
 int check_finish(struct element list, int size);
+void create_fruit(int fruits[SCREEN_SIZE][SCREEN_SIZE]);
+int fruit_eaten(int fruits[SCREEN_SIZE][SCREEN_SIZE], struct element head);
+void longer_tail(struct element snake, int x, int y);
 
-struct element snake_move(struct element list, int d);
-int change_direction(int d);
+struct element snake_move(struct element list, int d, int fruits[SCREEN_SIZE][SCREEN_SIZE]);
+int change_direction();
+char * int_to_string(int n);
