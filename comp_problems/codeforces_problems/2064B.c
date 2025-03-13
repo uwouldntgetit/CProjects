@@ -8,14 +8,13 @@
  * 2. among the arrays that respect rule 1, take the smallest
 */
 void main(){
-    int *arr, *comp;
-    int t, n, l, r, cnt;
+    long long int *arr, *comp;
+    long long int t, n, l, r, cnt;
 
     scanf("%d", &t);
     // cleans stdin
     scanf("%*[^\n]");
     
-    // find the maximus contiguous subarray of distinct element
     while(t-- > 0){
         scanf("%d", &n);
         arr = malloc(sizeof(int) * n);
@@ -48,12 +47,6 @@ void main(){
         for(int i = 0; i < n; i++){
             // find l and r :)
             check = true;
-            /*for(int k = 0; k < cnt; k++){*/
-            /*    if(arr[i] == comp[k]){*/
-            /*        check = false;*/
-            /*        break;*/
-            /*    }*/
-            /*}*/
 
             if(arr[i] < 0)
                 check = false;
@@ -77,12 +70,7 @@ void main(){
             }
         }
 
-        /*for(int i = 0; i < cnt; i++){*/
-        /*    printf("%d ", comp[i]);*/
-        /*}*/
-        /*printf("\n");*/
-        /*printf("%d\n", comp[0]);*/
-        if(-1 == m)
+            if(-1 == m)
             printf("0\n");
         else
             printf("%d %d\n", res_l + 1, res_r + 1);

@@ -1,0 +1,27 @@
+There are turns
+there is a budget D
+each turn has:
+- min buildings num Tm
+- max buildings num	Tx
+- profit per building Tr
+
+the budget is updated after every turn
+revenue (rev):
+if Tm isn't reached:
+	rev = 0;
+else:
+	n = "num buildings";
+	rev = min(n, Tx) * Tr;
+
+from revenue are subtracted periodic costs
+At the end of turn D += rev
+
+START:
+1. have budget D, can pruchase new resources, can't exceed D
+2. must pay maintanance cost RP of each resource, you are given opearting resources RU for buildings 
+3. revenue is calculated
+4 D is updated
+then return to 1.
+
+notes:
+each resource can be pruchased an unlimited amount of times.
