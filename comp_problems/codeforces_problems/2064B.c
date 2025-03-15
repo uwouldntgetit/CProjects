@@ -11,66 +11,49 @@ void main(){
     long long int *arr, *comp;
     long long int t, n, l, r, cnt;
 
-    scanf("%d", &t);
+    scanf("%lld", &t);
     // cleans stdin
     scanf("%*[^\n]");
     
     while(t-- > 0){
-        scanf("%d", &n);
+        scanf("%lld", &n);
         arr = malloc(sizeof(int) * n);
-        /*comp = malloc(sizeof(int) * n);*/
-        /*cnt = 0;*/
+        cnt = 0;
         int check;
+        for(int i = 0; i < n; i++)
 
         for(int i = 0; i < n; i++){
-            scanf("%d", arr + i);
+            // scanf("%lld", arr + i);
+            scanf("%lld", &cnt);
+            if(arr[i] > cnt) cnt = arr[i];
         }
+        comp = malloc(sizeof(int) * cnt + 1);
 
         for(int i = 0; i < n; i++){
-            check = 0;
-            for(int k = 0; k < n; k++){
-                if(arr[i] == arr[k] || arr[i] == -arr[k])
-                    check++;
-            }
-            // there must be no other similar number in the array for it to be in comp
-            // if check is a big number then the if has to fail
-            if(1 >= check){
-                /*comp[cnt] = arr[i];*/
-                /*cnt++;*/
-                arr[i] = -arr[i];
-            }
+            if(-5032 == comp[arr[i]] || -9209 == comp[arr[i]])
+                comp[arr[i]] = -9209;
+            else
+                comp[arr[i]] = -5032;
         }
-        // comp contains all the unique elements in arr
 
         l = r = -1;
-        int res_l, res_r, m = -1;
+        int res_l = -1, res_r, m = -1;
+
         for(int i = 0; i < n; i++){
-            // find l and r :)
-            check = true;
-
-            if(arr[i] < 0)
-                check = false;
-
-            // se check e' false allora non e' un numero da eliminare
-            if(check){
-                l = r = -1;
+            if(-5032 != comp[arr[i]]){
+                l = -1;
                 continue;
             }
-
-            if(-1 == l){
-                l = i;
-                r = i;
-            }
-            else r++;
-
-            if((r - l) > m){
+            r = i;
+            if(-1 == l) l = i;
+            if(r - l > m){
                 m = r - l;
                 res_r = r;
                 res_l = l;
             }
         }
 
-            if(-1 == m)
+        if(-1 == res_l)
             printf("0\n");
         else
             printf("%d %d\n", res_l + 1, res_r + 1);
