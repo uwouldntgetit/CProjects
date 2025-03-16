@@ -37,14 +37,18 @@ int main(){
 	    	}
 	    }
 	    long long int res = 1;
-	    printf("%d %lld\n", f, cnt);
+	    /*printf("%d %lld\n", f, cnt);*/
 
+        k -= f;
 	    if(cnt != k)
-	    	res = k / (cnt);
+	    	res += k / (cnt);
 	    
 	    // this is the actual problem
-    	if((k % cnt) % (cnt - 1) == 0)
-    		res++;
+    	/*if( (k % cnt) % (cnt - 1) == 0)*/
+    	/*	res++;*/
+
+        if(0 == f)
+            res = 0;
 
 	    if(-1 == cnt && f != 0)
 	    	res = 1;
