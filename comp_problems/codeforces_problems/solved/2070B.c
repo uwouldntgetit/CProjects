@@ -37,16 +37,15 @@ int main(){
 	    	}
 	    }
 	    long long int res = 1;
-	    /*printf("%d %lld\n", f, cnt);*/
+	    // printf("%d %lld\n", f, cnt);
+
+	    // now I got f and cnt, which is the number of turns an eventual iteration takes
 
         k -= f;
-	    if(cnt != k)
-	    	res += k / (cnt);
+	    // if(cnt != k)
+    	res += k / (cnt);
+	    // printf("check: %lld\n", res);
 	    
-	    // this is the actual problem
-    	/*if( (k % cnt) % (cnt - 1) == 0)*/
-    	/*	res++;*/
-
         if(0 == f)
             res = 0;
 
