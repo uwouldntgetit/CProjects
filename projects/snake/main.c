@@ -38,8 +38,11 @@ int main(int argc, char* argv[]){
         refresh();
         arr[0] = change_direction();
         mvprintw(0, 0, arr);
+        mvprintw(0, 2, "CIAO");
         /*mvprintw(0, max_x, );*/
         /*sleep(1);*/
+
+        // create fruits is accessed
         create_fruit(fruits);
         snake = snake_move(snake, arr[0], fruits);
     }

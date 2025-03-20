@@ -88,7 +88,6 @@ void create_fruit(int fruits[SCREEN_SIZE][SCREEN_SIZE]){
         int x = rand() % SCREEN_SIZE;
         int y = rand() % SCREEN_SIZE;
     }
-    mvprintw(0, 5, "hi");
     fruits[x][y] = 1;
 }
 
