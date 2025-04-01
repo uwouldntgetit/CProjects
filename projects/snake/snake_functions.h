@@ -20,12 +20,13 @@ struct element {
 };
 
 
-void show_field(struct element *list, int size, int xpos, int ypos);
+void show_field(struct element *list, int fruits[SCREEN_SIZE][SCREEN_SIZE], int size, int xpos, int ypos);
 int check_finish(struct element list, int size);
 void create_fruit(int fruits[SCREEN_SIZE][SCREEN_SIZE]);
 int fruit_eaten(int fruits[SCREEN_SIZE][SCREEN_SIZE], struct element head);
-void longer_tail(struct element snake, int x, int y);
+void longer_tail(struct element * snake, int x, int y);
+void fruit_remove(int fruits[SCREEN_SIZE][SCREEN_SIZE], int x, int y);
 
-struct element snake_move(struct element list, int d, int fruits[SCREEN_SIZE][SCREEN_SIZE]);
+struct element snake_move(struct element * list, int d, int fruits[SCREEN_SIZE][SCREEN_SIZE]);
 int change_direction();
 char * int_to_string(int n);

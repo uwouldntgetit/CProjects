@@ -3,7 +3,7 @@
 
 // I wantt to understand why the field isnt being shown
 // the problem I have is that the characters in the field aren't being shown
-void show_field(struct element *list, int size, int xpos, int ypos){
+void show_field(struct element *list, int fruits[SCREEN_SIZE][SCREEN_SIZE], int size, int xpos, int ypos){
     char field [size][size * 2 + 1];
 
     for(int i = 0; i < size; i++){
@@ -14,12 +14,24 @@ void show_field(struct element *list, int size, int xpos, int ypos){
         field[i][size * 2] = '\0';
     }
 
+    // i = y, k = x
+    for(int i = 0; i < SCREEN_SIZE; i++){
+        for(int k = 0; k < SCREEN_SIZE; k++){
+            if(fruits[i][k]){
+                field[i][k * 2] = 'F';
+                field[i][(k * 2) + 1] = ' ';
+            }
+        }
+    }
+
     field[list->y][list->x * 2] = '@';
     list = list->next;
 
     while(list != NULL){
         field[list->y][list->x * 2] = 'S';
+        list = list->next;
     }
+
 
     // now it works, the first coordinate of mvprintw is y, the second x
     for(int i = 0; i < size; i++){
@@ -33,8 +45,13 @@ int check_finish(struct element list, int size){
     struct element head = list;
 
     while(list.next){
-        if(list.x == head.x && list.y == head.y)
+        // se entra qui dentro allora vuol dire che list.next esiste
+        if(list.x == head.x && list.y == head.y){
+            mvprintw(0, 0, "WOW");
+            refresh();
+            sleep(1);
             return 0;
+        }
 
         list = *(list.next);
     }
@@ -44,37 +61,45 @@ int check_finish(struct element list, int size){
     return 1;
 }
 
-struct element snake_move(struct element list, int d, int fruits[SCREEN_SIZE][SCREEN_SIZE]){
-    struct element head = list;
+struct element snake_move(struct element * list, int d, int fruits[SCREEN_SIZE][SCREEN_SIZE]){
+    struct element * head = list;
     int x, y;
+    int c = 0;
     int last_x, last_y;
-    x = last_x = head.x;
-    y = last_y = head.y;
+    x = last_x = head->x;
+    y = last_y = head->y;
 
     if(d == 's')
-        head.y++;
+        head->y++;
     if(d == 'w')
-        head.y--;
+        head->y--;
     if(d == 'd')
-        head.x++;
+        head->x++;
     if(d == 'a')
-        head.x--;
+        head->x--;
 
-    while(list.next != NULL){
-        list = *(list.next);
-        x += list.x;
-        y += list.y;
+    while(list->next != NULL){
+        list = list->next;
+        x += list->x;
+        y += list->y;
 
-        list.x = x - list.x;
-        list.y = y - list.y;
+        list->x = x - list->x;
+        list->y = y - list->y;
         
-        x -= list.x;
-        y -= list.y;
+        x -= list->x;
+        y -= list->y;
+        c++;
     }
-    if(fruit_eaten(fruits, head))
-       longer_tail(list, last_x, last_y);
+    last_x = x;
+    last_y = y;
 
-    return head;
+    if(fruit_eaten(fruits, *head)){
+        longer_tail(list, last_x, last_y);
+        fruit_remove(fruits, head->x, head->y);
+        mvprintw(0, c, "hi");
+    }
+
+    return *head;
 }
 
 /* function that periodically creates fruits on the playing field that when 
@@ -82,36 +107,41 @@ struct element snake_move(struct element list, int d, int fruits[SCREEN_SIZE][SC
  * before it moved. every element adds 5 to the score
  */
 void create_fruit(int fruits[SCREEN_SIZE][SCREEN_SIZE]){
-    int x = 3;
-    int y = 3;
-    while(fruits[x][y]){
-        int x = rand() % SCREEN_SIZE;
-        int y = rand() % SCREEN_SIZE;
-    }
+    int x;
+    int y;
+    do{
+        x = rand() % SCREEN_SIZE;
+        y = rand() % SCREEN_SIZE;
+    }while(fruits[x][y]);
     fruits[x][y] = 1;
 }
 
+void fruit_remove(int fruits[SCREEN_SIZE][SCREEN_SIZE], int x, int y){
+    fruits[y][x] = 0;
+}
+
 int fruit_eaten(int fruits[SCREEN_SIZE][SCREEN_SIZE], struct element head){
-    if(fruits[head.x][head.y]){
+    if(fruits[head.y][head.x]){
         return 1;
     }
     return 0;
 }
 
-void longer_tail(struct element snake, int x, int y){
-    struct element t;
-    t.x = x;
-    t.y = y;
-    while(snake.next != NULL){
-        snake = * snake.next;
+void longer_tail(struct element * snake, int x, int y){
+    struct element * t = malloc(sizeof(struct element));
+    t->x = x;
+    t->y = y;
+    t->next = NULL;
+    while(snake->next != NULL){
+        snake = snake->next;
     }
-    snake.next = &t;
+    snake->next = t;
 }
 
 // The last thing I need is a function that captures the 'd' and 'a' keyboard buttons and changes
 // the direction accordingly
 int change_direction(){
+    /*flushinp();*/
     int x = getch();
-    flushinp();
     return x;
 }
