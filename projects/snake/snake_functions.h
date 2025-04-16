@@ -27,6 +27,6 @@ int fruit_eaten(int fruits[SCREEN_SIZE][SCREEN_SIZE], struct element head);
 void longer_tail(struct element * snake, int x, int y);
 void fruit_remove(int fruits[SCREEN_SIZE][SCREEN_SIZE], int x, int y);
 
-struct element snake_move(struct element * list, int d, int fruits[SCREEN_SIZE][SCREEN_SIZE]);
+struct element snake_move(struct element * list, int d, int fruits[SCREEN_SIZE][SCREEN_SIZE], int* x);
 int change_direction();
-char * int_to_string(int n);
+char * int_to_str(int n);

@@ -14,6 +14,7 @@ int main(int argc, char* argv[]){
     int max_x, max_y;
     int score = 0, counter = 0;
     int fruits[SCREEN_SIZE][SCREEN_SIZE];
+    int l = 0;
     char input = '2';
     getmaxyx(stdscr, max_y, max_x);
     struct element snake;
@@ -40,16 +41,19 @@ int main(int argc, char* argv[]){
         refresh();
         input = change_direction();
         arr[0] = input;
-        mvprintw(0, 0, arr);
+        mvprintw(0, 0, int_to_str(score * l));
         /*mvprintw(0, max_x, );*/
         /*sleep(1);*/
 
         // create fruits is accessed
-        if(0 == counter % 5)
+        if(0 == counter % 5){
             create_fruit(fruits);
+            counter = 0;
+        }
 
-        snake = snake_move(&snake, arr[0], fruits);
+        snake = snake_move(&snake, arr[0], fruits, &score);
         counter++;
+        l++;
     }
     
     free(snake.next);

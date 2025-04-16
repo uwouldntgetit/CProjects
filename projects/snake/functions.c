@@ -14,15 +14,6 @@ void show_field(struct element *list, int fruits[SCREEN_SIZE][SCREEN_SIZE], int 
         field[i][size * 2] = '\0';
     }
 
-    // i = y, k = x
-    for(int i = 0; i < SCREEN_SIZE; i++){
-        for(int k = 0; k < SCREEN_SIZE; k++){
-            if(fruits[i][k]){
-                field[i][k * 2] = 'F';
-                field[i][(k * 2) + 1] = ' ';
-            }
-        }
-    }
 
     field[list->y][list->x * 2] = '@';
     list = list->next;
@@ -32,6 +23,15 @@ void show_field(struct element *list, int fruits[SCREEN_SIZE][SCREEN_SIZE], int 
         list = list->next;
     }
 
+    // i = y, k = x
+    for(int i = 0; i < SCREEN_SIZE; i++){
+        for(int k = 0; k < SCREEN_SIZE; k++){
+            if(fruits[i][k]){
+                field[i][k * 2] = 'F';
+                field[i][(k * 2) + 1] = ' ';
+            }
+        }
+    }
 
     // now it works, the first coordinate of mvprintw is y, the second x
     for(int i = 0; i < size; i++){
@@ -45,15 +45,15 @@ int check_finish(struct element list, int size){
     struct element head = list;
 
     while(list.next){
+        list = *(list.next);
         // se entra qui dentro allora vuol dire che list.next esiste
         if(list.x == head.x && list.y == head.y){
-            mvprintw(0, 0, "WOW");
-            refresh();
-            sleep(1);
+            /*mvprintw(0, 0, "WOW");*/
+            /*refresh();*/
+            /*sleep(1);*/
             return 0;
         }
 
-        list = *(list.next);
     }
     
     if(head.x >= size || head.y >= size || head.x < 0 || head.y < 0)
@@ -61,7 +61,7 @@ int check_finish(struct element list, int size){
     return 1;
 }
 
-struct element snake_move(struct element * list, int d, int fruits[SCREEN_SIZE][SCREEN_SIZE]){
+struct element snake_move(struct element * list, int d, int fruits[SCREEN_SIZE][SCREEN_SIZE], int* score_cnt){
     struct element * head = list;
     int x, y;
     int c = 0;
@@ -69,14 +69,23 @@ struct element snake_move(struct element * list, int d, int fruits[SCREEN_SIZE][
     x = last_x = head->x;
     y = last_y = head->y;
 
-    if(d == 's')
-        head->y++;
-    if(d == 'w')
-        head->y--;
-    if(d == 'd')
-        head->x++;
-    if(d == 'a')
-        head->x--;
+    // Spaccato
+    switch(d) {
+        case 's':
+            head->y++;
+            break;
+        case 'w':
+            head->y--;
+            break;
+        case 'd':
+            head->x++;
+            break;
+        case 'a':
+            head->x--;
+            break;
+        default:
+            return *head;
+    }
 
     while(list->next != NULL){
         list = list->next;
@@ -96,7 +105,7 @@ struct element snake_move(struct element * list, int d, int fruits[SCREEN_SIZE][
     if(fruit_eaten(fruits, *head)){
         longer_tail(list, last_x, last_y);
         fruit_remove(fruits, head->x, head->y);
-        mvprintw(0, c, "hi");
+        *score_cnt += 1;
     }
 
     return *head;
@@ -141,7 +150,24 @@ void longer_tail(struct element * snake, int x, int y){
 // The last thing I need is a function that captures the 'd' and 'a' keyboard buttons and changes
 // the direction accordingly
 int change_direction(){
-    /*flushinp();*/
+    flushinp();
+    sleep(1);
     int x = getch();
     return x;
+}
+
+char* int_to_str(int x){
+    char * r = malloc(sizeof(char) * 16);
+    int i = 0;
+    int c = x;
+    while(c > 0){
+        c /= 10;
+        i++;
+    }
+    r[i] = '\0';
+    while(x > 0){
+        r[--i] = (x % 10) + 48;
+        x /= 10;
+    }
+    return r;
 }
